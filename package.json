@@ -18,7 +18,7 @@
     "request-promise": "^4.2.2",
     "sails": "^1.1.0",
     "sails-hook-apianalytics": "^2.0.0",
-    "sails-hook-organics": "^0.15.1",
+    "sails-hook-organics": "^0.16.0",
     "sails-hook-orm": "^2.1.1",
     "sails-hook-sockets": "^1.5.5",
     "sails-postgresql": "^1.0.2"
