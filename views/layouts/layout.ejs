@@ -29,7 +29,7 @@
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css">
                 <% /* Auto-injected «link» tags: */ %>
                     <!--STYLES-->
-                    <link rel="stylesheet" href="/dist/production.min.f27dd380.css">
+                    <link rel="stylesheet" href="/min/production.min.css">
                     <!--STYLES END-->
                     <link rel="apple-touch-icon" href="kc_app_icon.png">
                     <link rel="apple-touch-startup-image" href="kc_app_icon.png">
@@ -62,14 +62,16 @@
                     </a>
                 </div>
             </div>
+            <div class="ui basic clearing segment">
 
-            <div class="ui right floated basic compact segment categoy search" style="margin:0%;">
-                <div class="ui left icon input">
-                    <input class="prompt" type="text" placeholder="Search Cards">
-                    <i class="search icon">
-                    </i>
+                <div class="ui right floated basic compact segment categoy search" style="margin:0%;">
+                    <div class="ui left icon input">
+                        <input class="prompt" type="text" placeholder="Search Cards">
+                        <i class="search icon">
+                        </i>
+                    </div>
+                    <div class="ui results"></div>
                 </div>
-                <div class="ui results"></div>
             </div>
             <%- body %>
                 <a class="circular ui icon right floated fixed primary big button" href="/cards/create" style="position:fixed;z-index:100;top:auto;left:auto;right:20px;bottom:20px;">
@@ -135,7 +137,7 @@
 
                             <% /* Auto-injected «script» tags: */ %>
                                 <!--SCRIPTS-->
-                                <script src="/dist/production.min.7fa8558f.js"></script>
+                                <script src="/min/production.min.js"></script>
                                 <!--SCRIPTS END-->
 
 </body>
