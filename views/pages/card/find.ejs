@@ -1,0 +1,13 @@
+<div id="card-find" v-cloak>
+  <div class="ui container">
+    <div class="ui stackable grid">
+      <%- partial('../partials/tag.ejs') %>
+        <div class="ui twelve wide column">
+            <div class="ui stackable three column doubling grid">
+              <%- partial(`./card.ejs`) %>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>

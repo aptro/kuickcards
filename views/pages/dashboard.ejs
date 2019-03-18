@@ -1,0 +1,41 @@
+<div id="dashboard" v-cloak>
+
+  <div class="ui container">
+    </br>
+    </br>
+    </br>
+    <div class="ui stackable centered grid">
+      <div class="ui ten wide column">
+
+        <div class="ui basic segment">
+          <div class="ui fluid blue link card">
+            <div class="ui inverted dimmer">
+              <div class="ui text loader">Loading</div>
+            </div>
+            <div class="content">
+              <div class="right floated meta">
+                <div class="ui floating dropdown icon learning_opt" :key="learning.id">
+                  <i class="small dropdown icon"></i>
+                </div>
+              </div>
+              <div class="header q" style="font-size: 24px;">
+                {{learning.question}}
+              </div>
+
+              <div class="meta">{{formatDate(learning.createdAt)}}</div>
+              <div class="description a">
+                <div class="trix-content" v-html="learning.answer"></div>
+              </div>
+            </div>
+            <div class="extra content" v-if='learning.tags.length'>
+              <div class="ui blue basic label" :id="tag.id" v-for="tag in learning.tags">
+                {{tag.name}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>

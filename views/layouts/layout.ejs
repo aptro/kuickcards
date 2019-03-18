@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Kuickcards</title>
+    <meta name="description" content="Kuickcards.com makes memory a choice.">
+    <meta name="keywords" content="memory system,learning">
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+    <% /* Viewport tag for sensible mobile support */ %>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <% /* Script tags should normally be included further down the page- but scripts
+    that load fonts are a special exception to the rule.  (We include them up here
+    above the «body» to prevent the page flickering when fonts load.)  */ %>
+            <!-- Font Awesome -->
+            <script src="https://use.fontawesome.com/96cbd61ead.js"></script>
+            <% /*
+        Stylesheets
+        ========================
+
+        Stylesheets can be hard-coded as «link» tags, automatically injected
+        by the asset pipeline between "STYLES" and "STYLES END", or both.
+        (https://sailsjs.com/docs/concepts/assets/task-automation)
+    */ %>
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css">
+                <% /* Auto-injected «link» tags: */ %>
+                    <!--STYLES-->
+                    <link rel="stylesheet" href="/dist/production.min.f27dd380.css">
+                    <!--STYLES END-->
+                    <link rel="apple-touch-icon" href="kc_app_icon.png">
+                    <link rel="apple-touch-startup-image" href="kc_app_icon.png">
+                    <meta name="apple-mobile-web-app-title" content="KuickCards">
+                    <!-- <meta name="apple-mobile-web-app-capable" content="yes"> -->
+</head>
+
+<body>
+    <% if(req.user){%>
+        <div class="ui container">
+            <div class="ui pointing borderless menu">
+                <a class="ui icon item" href="/cards">
+                    <i class="home icon"></i>
+                </a>
+                <a class="<%= (req.url=='/cards') ? " active ": "ui " %> icon item" href="/cards">
+                    Cards
+                </a>
+                <a class="<%= (req.url=='/stats') ? " active ": "ui " %> icon item" href="/stats">
+                    Stats
+                </a>
+                <div class="right menu">
+                    <div class="ui item">
+                        <a class="ui blue basic labeled icon button" href="/cards/review">
+                            Review Cards
+                            <i class="<%= (req.url=='/cards/review') ? " pause ": "play " %> icon"></i>
+                        </a>
+                    </div>
+                    <a class="<%= (req.url=='/logout') ? " active ": "ui " %> icon item" href="/logout">
+                        <i class="power off icon"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="ui right floated basic compact segment categoy search" style="margin:0%;">
+                <div class="ui left icon input">
+                    <input class="prompt" type="text" placeholder="Search Cards">
+                    <i class="search icon">
+                    </i>
+                </div>
+                <div class="ui results"></div>
+            </div>
+            <%- body %>
+                <a class="circular ui icon right floated fixed primary big button" href="/cards/create" style="position:fixed;z-index:100;top:auto;left:auto;right:20px;bottom:20px;">
+                    <i class="icon add"></i>
+                </a>
+        </div>
+        <%} else {%>
+            <div class="ui grid" style="padding-top: 0.8em">
+                <div class="ui sixteen wide column">
+                    <div class="ui secondary  menu">
+                        <div class="ui container">
+                            <a class="<%= (req.url=='/') ? " active ": "ui " %> item" href="/">Kuickcards</a>
+                            <!-- <a class="<%= (req.url=='/pricing') ? " active ": "ui " %>  item" href="/pricing">Pricing</a> -->
+                            <a class="<%= (req.url=='/readme') ? " active ": "ui " %>  item" href="/readme">ReadMe</a>
+                            <div class="right menu">
+                                <div class="ui item">
+                                    <a class="ui twitter button" href="/entrance/twitter">
+                                        <i class="twitter icon"></i>
+                                        Log In
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui container">
+                    <%- body %>
+                </div>
+
+            </div>
+            <div class="ui bottom fixed borderless menu">
+                <div class="right menu">
+
+                    <a class="ui item circular twitter icon " href="https://twitter.com/aptro_" target="_blank">
+                        Say hello &nbsp;
+                        <i class="twitter icon"></i>
+                    </a>
+
+                    <a class="ui item" target="_blank" href="/legal/terms">Terms &nbsp;
+                    </a>
+                    <a class="ui item" target="_blank" href="/legal/privacy">Privacy &nbsp;
+                    </a>
+                </div>
+            </div>
+            <%}%>
+
+
+                <% /*
+      Client-side JavaScript
+      ========================
+
+      Scripts can be hard-coded as «script» tags, automatically injected
+      by the asset pipeline between "SCRIPTS" and "SCRIPTS END", or both.
+      (https://sailsjs.com/docs/concepts/assets/task-automation)
+    */ %>
+
+                    <% /* Load Stripe Checkout */ %>
+                        <script src="https://checkout.stripe.com/checkout.js"></script>
+
+                        <% /* Delete the global `self` to help avoid client-side bugs.
+    (see https://developer.mozilla.org/en-US/docs/Web/API/Window/self) */ %>
+                            <script>delete window.self;</script>
+
+                            <% /* Auto-injected «script» tags: */ %>
+                                <!--SCRIPTS-->
+                                <script src="/dist/production.min.7fa8558f.js"></script>
+                                <!--SCRIPTS END-->
+
+</body>
+<script>
+    $('.ui.search')
+        .search({
+            minCharacters: 3,
+            apiSettings: {
+                onResponse: function (searchResponse) {
+                    var response = { results: [] };
+                    // translate search API response to work with search
+                    $.each(searchResponse.hits, function (index, item) {
+                        var maxResults = 8
+                            ;
+                        if (index >= maxResults) {
+                            return false;
+                        }
+
+                        // add result to category
+                        response.results.push({
+                            title: item.question,
+                            // description: (item.answer) ? item.answer.substring(0, 40) : '' + '...',
+                            url: '/cards/' + item.id
+                        });
+                    });
+                    return response;
+                },
+                url: '/cards/search?q={query}'
+            }
+        });
+    $('.ui.dropdown')
+        .dropdown()
+        ;
+    $('.ui.sidebar')
+        .sidebar({
+            context: $('.bottom.segment')
+        })
+        .sidebar('attach events', '.menu .item')
+        ;
+
+</script>
+
+</html>

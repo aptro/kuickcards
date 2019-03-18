@@ -1,0 +1,111 @@
+<div id="deck" v-cloak>
+  <div class="ui container">
+    <div class="ui stackable grid">
+      <div class="four wide column">
+        <div class="ui vertical fluid pointing menu">
+          <div class="item">
+            <b>Decks</b>
+            <i class="add icon add_deck">
+            </i>
+            <div class="ui fluid popup">
+              <ajax-form action="addDeck" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData" :form-rules="deckFormRules"
+                :form-errors.sync="formErrors" @submitted="submittedDeckForm($event)">
+                <div class="ui field">
+                  <label for="name">Deck</label>
+                  <input type="text" placeholder="Name" v-model="formData.name" :class="[formErrors.name ? 'is-invalid' : '']" focus-first>
+                  <div class="invalid-feedback" v-if="formErrors.name">Name is Required.</div>
+                </div>
+                <p class="text-danger" v-if="cloudError">
+                  <small>An error occured while processing your request. Please check your information and try again, or
+                    <a href="/contact">contact support</a> if the error persists.</small>
+                </p>
+                <div class="ui field">
+                  <ajax-button :syncing="syncing" class="ui blue button">Add</ajax-button>
+                </div>
+              </ajax-form>
+            </div>
+          </div>
+          <div class="item fluid" v-for="deck in decks" :data-deck="deck.id" @click='showDeckDetail(deck.id)'>
+            {{deck.name}}
+            <!-- <div class="ui green label" v-if="deck.id % 2">{{deck.id}}</div> -->
+          </div>
+        </div>
+      </div>
+      <div class="eight wide column">
+        <div class="ui segment">
+          <div class="ui inverted dimmer">
+            <div class="ui text loader">Loading</div>
+          </div>
+          <div class="ui four tiny statistics" v-if='currentDeckData'>
+            <div class="red horizontal statistic">
+              <div class="value">
+                {{currentDeckData.stats.due}}
+              </div>
+              <div class="label">
+                <i class="list alternate outline icon"></i> Due
+              </div>
+            </div>
+            <div class="green  horizontal statistic">
+              <div class="value">
+                {{currentDeckData.stats.review}}
+              </div>
+              <div class="label">
+                <i class="list alternate outline icon"></i> Review
+              </div>
+            </div>
+            <div class="blue  horizontal statistic">
+              <div class="value">
+                {{currentDeckData.stats.new}}
+              </div>
+              <div class="label">
+                <i class="list alternate outline icon"></i>New
+              </div>
+            </div>
+            <div class="grey  horizontal statistic">
+              <div class="value">
+                {{currentDeckData.stats.total}}
+              </div>
+              <div class="label">
+                <i class="list alternate outline icon"></i> Total
+              </div>
+            </div>
+          </div>
+          <div class="ui basic placeholder center aligned segment">
+            <a :href="'/decks/'+ currentDeckData.deck.id + '/session'" class="ui center aligned green button" v-if='currentDeckData'>
+              Start
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="four wide column">
+        <div class="ui segment">
+          <h5 class="ui red header">
+            <div class="content">
+              Due
+              <div class="sub header">Number of cards are in the queue which are ready to recall again.</div>
+            </div>
+          </h5>
+          <h5 class="ui green header">
+            <div class="content">
+              Review
+              <div class="sub header"> Number of cards under review. They are not ready yet.</div>
+            </div>
+          </h5>
+          <h5 class="ui blue header">
+            <div class="content">
+              New
+              <div class="sub header"> Number of cards that are added to deck but you haven't started learning yet.</div>
+            </div>
+          </h5>
+          <h5 class="ui grey header">
+            <div class="content">
+              All
+              <div class="sub header"> Total number of cards in the deck.</div>
+            </div>
+          </h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>

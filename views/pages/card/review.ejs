@@ -1,0 +1,56 @@
+<div id="card-review" v-cloak>
+  <div class="ui container">
+    <div class="ui stackable centered grid">
+      <div class="ui ten wide column">
+        <div class="ui basic segment" v-if="card">
+          <div class="ui inverted dimmer">
+            <div class="ui text loader">Loading</div>
+          </div>
+          <div class="ui fluid blue card">
+            <div class="extra content">
+              <div class="right floated meta">{{formatDate(card.createdAt)}}</div>
+            </div>
+            <div class="content">
+              <div class="ui header">
+                {{card.question}}
+              </div>
+              <div class="description" v-if="showAnswer">
+                <div class="trix-content" v-html="card.answer"></div>
+              </div>
+            </div>
+
+            <div class="extra content">
+              <div class="ui label" v-for="tag in card.tags">{{tag.name}}</div>
+            </div>
+          </div>
+          <div class="ui basic placeholder center aligned segment">
+            <button class="ui center aligned primary button" @click="showAnswer = true" v-if="!showAnswer">
+              Show Answer
+            </button>
+            <div class="inline" v-if="showAnswer">
+              <div class="ui animated button" tabindex="0" @click="updateReview(false)">
+                <div class="visible content">Don't Remember</div>
+              </div>
+              <div class="ui animated blue button" tabindex="0" @click="updateReview(true)">
+                <div class="visible content">Remember</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>
+
+  <style>
+    .segment .text {
+      resize: none;
+      outline: none;
+      width: 100%;
+      padding: 10px;
+      border: none;
+      height: 100%;
+      margin: -10px;
+    }
+  </style>

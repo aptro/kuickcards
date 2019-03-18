@@ -1,0 +1,31 @@
+<div class="ui fluid column" v-for="card in cards">
+    <div class="ui fluid link card" :key="card.id" @click="findOneCard(card.id)">
+        <div class="ui inverted dimmer" :id="card.id">
+            <div class="ui text loader">Loading</div>
+        </div>
+        <div class="content">
+            <div class="right floated meta">
+                <div class="ui floating dropdown icon card_opt" :key="card.id">
+                    <i class="small dropdown icon"></i>
+                    <div class="menu">
+                        <div class="item" @click="deleteCard(card.id)">
+                            <i class="red trash alternate outline icon"></i>Remove</div>
+                    </div>
+                </div>
+            </div>
+            <div class="header" style="font-size: 16px;">
+                {{card.question}}
+            </div>
+
+            <div class="meta">{{formatDate(card.createdAt)}}</div>
+            <div class="description">
+                <div class="trix-content" v-html="card.answer"></div>
+            </div>
+        </div>
+        <div class="extra content" v-if='card.tags.length'>
+            <div class="ui blue basic label" :id="tag.id" v-for="tag in card.tags">
+                {{tag.name}}
+            </div>
+        </div>
+    </div>
+</div>

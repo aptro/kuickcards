@@ -1,0 +1,52 @@
+<div id="card-find-one" v-cloak>
+  <div class="ui container">
+    <div class="ui stackable centered grid">
+      <div class="ui ten wide column">
+        <div class="ui basic segment">
+          <div class="ui fluid blue card">
+            <div class="ui inverted dimmer">
+              <div class="ui text loader">Loading</div>
+            </div>
+            <div class="extra content">
+              <div class="right floated meta">{{formatDate(card.createdAt)}}</div>
+            </div>
+            <div class="content">
+              <div class="ui header">
+                <div class="ui transparent focus fluid input">
+                  <input type="text" v-model=card.question placeholder="Enter Question" required>
+                </div>
+              </div>
+              <div class="description">
+                <trix v-model="card.answer" v-on:content-changed='onAnswerUpdate'></trix>
+              </div>
+            </div>
+
+            <div class="extra content">
+              <select class="ui fluid selection dropdown tags" v-model="card.tags" multiple="" name="tags">
+                <option value="">Tags</option>
+                <option :value="tag.id" :key="tag.id" v-for="tag in tags">{{tag.name}}</option>
+              </select>
+            </div>
+          </div>
+          <div></div>
+          <button class="ui left floated primary button" @click="createOrUpdateCard()">
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>
+
+  <style>
+    .segment .text {
+      resize: none;
+      outline: none;
+      width: 100%;
+      padding: 10px;
+      border: none;
+      height: 100%;
+      margin: -10px;
+    }
+  </style>

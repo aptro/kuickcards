@@ -1,0 +1,28 @@
+<ajax-form action="addCard" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData" :form-rules="CardformRules"
+    :form-errors.sync="formErrors" @submitted="submittedCardForm($event)">
+    <div class="field">
+        <label for="question">Question</label>
+        <input type="text" placeholder="question" v-model="formData.question" :class="[formErrors.question ? 'is-invalid' : '']">
+        <div class="invalid-feedback" v-if="formErrors.question">Author is Required.</div>
+    </div>
+    <div class="ui field">
+        <label for="answer">Answer</label>
+        <textarea placeholder="answer" v-model="formData.answer" :class="[formErrors.answer ? 'is-invalid' : '']"></textarea>
+        <div class="invalid-feedback" v-if="formErrors.answer">Please enter your Quote.</div>
+    </div>
+    <div class="ui field">
+        <label for="topics">Topics</label>
+        <select class="ui fluid selection dropdown topics" v-model="formData.topics" :class="[formErrors.topics ? 'is-invalid' : '']"
+            multiple="" name="topics">
+            <option :value="topic.id" :key="topic.id" v-for="topic in topics">{{topic.name}}</option>
+        </select>
+    </div>
+    <p class="text-danger" v-if="cloudError">
+        <small>An error occured while processing your request. Please check your information and try again, or
+            <a href="/contact">contact support</a> if the error persists.</small>
+    </p>
+    <div class="ui field">
+        <ajax-button :syncing="syncing" class="ui blue button">submit
+        </ajax-button>
+    </div>
+</ajax-form>

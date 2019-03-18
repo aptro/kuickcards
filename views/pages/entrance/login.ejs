@@ -1,0 +1,48 @@
+<div id="login" v-cloak>
+  <div class="ui center aligned stackable grid" v-if="!cloudSuccess">
+    <div class="five wide column">
+      <div class="ui segment">
+        <h1 class="text-center">Sign in</h1>
+        <div class="login-form-container">
+          <hr/>
+          <ajax-form action="login" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData" :form-rules="formRules"
+            :form-errors.sync="formErrors" @submitted="submittedForm()">
+            <div class="ui field">
+              <label for="email-address">Email address</label>
+              <input type="email"  placeholder="Email Address" :class="[formErrors.emailAddress ? 'is-invalid' : '']"
+                v-model.trim="formData.emailAddress" focus-first>
+              <div class="invalid-feedback" v-if="formErrors.emailAddress">Please provide a valid email address.</div>
+            </div>
+            <div class="ui field">
+              <label for="password">Enter your password</label>
+              <input type="password"  placeholder="Password" :class="[formErrors.password ? 'is-invalid' : '']" v-model.trim="formData.password">
+              <div class="invalid-feedback" v-if="formErrors.password">Please enter your password.</div>
+            </div>
+            <div class="ui field checkbox">
+              <input type="checkbox" id="remember" name="rememberMe" v-model="formData.rememberMe" />
+              <label for="remember">Remember Me</label>
+            </div>
+            <p class="text-danger" v-if="cloudError==='badCombo'">
+              <small>The credentials you entered are not associated with an account. Please check your email and/or password and
+                try again.</small>
+            </p>
+            <p class="text-danger" v-else-if="cloudError">
+              <small>An error occured while processing your request. Please check your information and try again, or
+                <a href="/contact">contact support</a> if the error persists.</small>
+            </p>
+            <div class="ui field">
+              <ajax-button :syncing="syncing" class="ui blue button">Sign in</ajax-button>
+            </div>
+          </ajax-form>
+          <p class="text-center">
+            <a href="/password/forgot">Forgot your password?</a>
+            <br>
+            <a href="/signup">Signup?</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<%- /* Expose locals as `window.SAILS_LOCALS` :: */ exposeLocalsToBrowser() %>

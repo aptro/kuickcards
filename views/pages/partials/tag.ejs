@@ -1,0 +1,32 @@
+<div class="ui four wide column">
+  <div class="ui vertical fluid pointing menu">
+    <div class="item">
+      <b>Tags</b>
+      <i class="add icon add_tag">
+      </i>
+      <div class="ui fluid popup">
+        <ajax-form action="createTag" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData" :form-rules="tagFormRules"
+          :form-errors.sync="formErrors" @submitted="submittedTagForm($event)">
+          <div class="ui field">
+            <label for="name">Tag</label>
+            <input type="text" placeholder="Name" v-model="formData.name" :class="[formErrors.name ? 'is-invalid' : '']" focus-first>
+            <div class="invalid-feedback" v-if="formErrors.name">Name is Required.</div>
+          </div>
+          <p class="text-danger" v-if="cloudError">
+            <small>An error occured while processing your request. Please check your information and try again, or
+              <a href="/contact">contact support</a> if the error persists.</small>
+          </p>
+          <div class="ui field">
+            <ajax-button :syncing="syncing" class="ui blue button">Add</ajax-button>
+          </div>
+        </ajax-form>
+      </div>
+    </div>
+    <div class="item fluid active" data-tag="all" @click='filterAllTags()'>
+      All
+    </div>
+    <div class="item fluid" v-for="tag in tags" :data-tag="tag.id" @click='filterTag(tag.id)'>
+      {{tag.name}}
+    </div>
+  </div>
+</div>
