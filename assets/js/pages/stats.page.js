@@ -27,29 +27,22 @@ parasails.registerPage('stats', {
           label: 'Remember',
           backgroundColor: color(window.chartColors.purple).alpha(0.7).rgbString(),
           borderColor: window.chartColors.purple,
-          fill: false
+          fill: true
         }, {
           data: SAILS_LOCALS.remember_false,
           label: 'Not Remember',
           backgroundColor: color(window.chartColors.green).alpha(0.7).rgbString(),
           borderColor: window.chartColors.green,
-          fill: false
+          fill: true
         }, {
           data: SAILS_LOCALS.card_added,
           label: 'Cards Added',
           backgroundColor: color(window.chartColors.orange).alpha(0.7).rgbString(),
           borderColor: window.chartColors.orange,
-          fill: false
+          fill: true
         }]
       },
       options: {
-        plugins: {
-          datalabels: {
-            display: function (context) {
-              return context.dataset.data[context.dataIndex] !== 0;
-            }
-          }
-        },
         responsive: true,
         title: {
           display: true,

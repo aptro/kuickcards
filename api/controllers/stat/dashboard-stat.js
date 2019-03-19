@@ -44,7 +44,7 @@ module.exports = {
       FROM
         interactionlog
       WHERE
-        log @> '{"remember":true}') il WHERE il.year = $1
+        log @> '{"remember":true}' AND "user" = $2) il WHERE il.year = $1
     GROUP BY
     EXTRACT(MONTH FROM created_at)
   `
@@ -60,7 +60,7 @@ module.exports = {
       FROM
         interactionlog
       WHERE
-        log @> '{"remember":false}') il WHERE il.year = $1
+        log @> '{"remember":false}' AND "user" = $2) il WHERE il.year = $1
     GROUP BY
     EXTRACT(MONTH FROM created_at)
   `
@@ -73,13 +73,13 @@ module.exports = {
         to_timestamp(TRUNC(CAST("createdAt" AS bigint) / 1000))::DATE AS created_at,
         EXTRACT(YEAR FROM to_timestamp(TRUNC(CAST("createdAt" AS bigint) / 1000))::DATE) as year
       FROM
-        card) AS c WHERE c.year = $1
+        card WHERE "user" = $2) AS c WHERE c.year = $1
     GROUP BY
     EXTRACT(MONTH FROM created_at)
   `
-    var count_remember_true = await sails.sendNativeQuery(query_remember_true, [year]);
-    var count_remember_false = await sails.sendNativeQuery(query_remember_false, [year]);
-    var count_card_added = await sails.sendNativeQuery(query_card_added, [year]);
+    var count_remember_true = await sails.sendNativeQuery(query_remember_true, [year, this.req.user.id]);
+    var count_remember_false = await sails.sendNativeQuery(query_remember_false, [year, this.req.user.id]);
+    var count_card_added = await sails.sendNativeQuery(query_card_added, [year, this.req.user.id]);
     var locals = {
       remember_true: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       remember_false: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
