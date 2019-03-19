@@ -18,6 +18,7 @@
     above the «body» to prevent the page flickering when fonts load.)  */ %>
             <!-- Font Awesome -->
             <script src="https://use.fontawesome.com/96cbd61ead.js"></script>
+            <script src="https://www.chartjs.org/dist/2.8.0/Chart.min.js"></script>
             <% /*
         Stylesheets
         ========================
@@ -29,7 +30,8 @@
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css">
                 <% /* Auto-injected «link» tags: */ %>
                     <!--STYLES-->
-                    <link rel="stylesheet" href="/dist/production.min.f27dd380.css">
+                    <link rel="stylesheet" href="/styles/importer.css">
+                    <link rel="stylesheet" href="/styles/trix.css">
                     <!--STYLES END-->
                     <link rel="apple-touch-icon" href="kc_app_icon.png">
                     <link rel="apple-touch-startup-image" href="kc_app_icon.png">
@@ -39,8 +41,8 @@
 
 <body>
     <% if(req.user){%>
-        <div class="ui container">
-            <div class="ui pointing borderless menu">
+        <div class="ui">
+            <div class="ui borderless menu">
                 <a class="ui icon item" href="/cards">
                     <i class="home icon"></i>
                 </a>
@@ -53,8 +55,7 @@
                 <div class="right menu">
                     <div class="ui item">
                         <a class="ui blue basic labeled icon button" href="/cards/review">
-                            Review Cards
-                            <i class="<%= (req.url=='/cards/review') ? " pause ": "play " %> icon"></i>
+                            Review<i class="<%= (req.url=='/cards/review') ? " pause ": "play " %> icon"></i>
                         </a>
                     </div>
                     <a class="<%= (req.url=='/logout') ? " active ": "ui " %> icon item" href="/logout">
@@ -137,7 +138,33 @@
 
                             <% /* Auto-injected «script» tags: */ %>
                                 <!--SCRIPTS-->
-                                <script src="/dist/production.min.7fa8558f.js"></script>
+                                <script src="/dependencies/sails.io.js"></script>
+                                <script src="/dependencies/lodash.js"></script>
+                                <script src="/dependencies/jquery.min.js"></script>
+                                <script src="/dependencies/bowser.js"></script>
+                                <script src="/dependencies/vue.js"></script>
+                                <script src="/dependencies/vue-router.js"></script>
+                                <script src="/dependencies/vue-toasted.js"></script>
+                                <script src="/dependencies/toasted-init.js"></script>
+                                <script src="/dependencies/parasails.js"></script>
+                                <script src="/dependencies/cloud.js"></script>
+                                <script src="/dependencies/semantic.min.js"></script>
+                                <script src="/dependencies/trix.js"></script>
+                                <script src="/js/cloud.setup.js"></script>
+                                <script src="/js/components/ajax-button.component.js"></script>
+                                <script src="/js/components/ajax-form.component.js"></script>
+                                <script src="/js/components/trix.component.js"></script>
+                                <script src="/js/utilities/format-date.js"></script>
+                                <script src="/js/utilities/open-stripe-checkout.js"></script>
+                                <script src="/js/pages/498.page.js"></script>
+                                <script src="/js/pages/card/find.page.js"></script>
+                                <script src="/js/pages/card/findOne.page.js"></script>
+                                <script src="/js/pages/card/review.page.js"></script>
+                                <script src="/js/pages/deck.page.js"></script>
+                                <script src="/js/pages/faq.page.js"></script>
+                                <script src="/js/pages/legal/privacy.page.js"></script>
+                                <script src="/js/pages/legal/terms.page.js"></script>
+                                <script src="/js/pages/stats.page.js"></script>
                                 <!--SCRIPTS END-->
 
 </body>
