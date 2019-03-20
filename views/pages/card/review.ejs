@@ -2,6 +2,9 @@
   <div class="ui container">
     <div class="ui stackable centered grid">
       <div class="ui ten wide column">
+        <div class="ui basic segment" v-if="!card">
+          <a href="/cards/create">Add Card</a> to strat review
+        </div>
         <div class="ui basic segment" v-if="card">
           <div class="ui inverted dimmer">
             <div class="ui text loader">Loading</div>

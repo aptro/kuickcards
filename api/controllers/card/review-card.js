@@ -38,10 +38,11 @@ module.exports = {
             });
             return exits.success({ status: 'success' });
         }
-        
-        var card_counts = await Card.count();
-        var random_id = getRandomInt(1, card_counts);
-        var card = await Card.findOne({id:random_id}).populate('tags')
+
+        var query = await sails.sendNativeQuery('SELECT id FROM card where "user"=$1 ORDER BY RANDOM() LIMIT 1', [this.req.user.id])
+        if (!query.rows.length)
+            return exits.success({ card: null });
+        var card = await Card.findOne({ id: query.rows[0].id }).populate('tags')
         return exits.success({ card: card });
     }
 
