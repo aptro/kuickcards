@@ -347,6 +347,14 @@ module.exports = {
   custom: {
     baseUrl: 'https://app.kuickcards.com',
     internalEmailAddress: 'support@kuickcards.com'
+  },
+  
+  uploads: {
+    adapter: require('skipper-s3'),
+    key: process.env.AWS_ACCESS_KEY,
+    secret: process.env.AWS_ACCESS_SECRET,
+    bucket: process.env.AWS_BUCKET,
+    region: process.env.AWS_REGION,
   }
 
 
