@@ -17,7 +17,7 @@
               <div class="ui header">
                 {{card.question}}
               </div>
-              <div class="description" v-if="showAnswer">
+              <div class="description">
                 <div class="trix-content" v-html="card.answer"></div>
               </div>
             </div>
@@ -26,16 +26,10 @@
               <div class="ui label" v-for="tag in card.tags">{{tag.name}}</div>
             </div>
           </div>
-          <div class="ui basic placeholder center aligned segment">
-            <button class="ui center aligned primary button" @click="showAnswer = true" v-if="!showAnswer">
-              Show Answer
-            </button>
-            <div class="inline" v-if="showAnswer">
-              <div class="ui animated button" tabindex="0" @click="updateReview(false)">
-                <div class="visible content">Don't Remember</div>
-              </div>
-              <div class="ui animated blue button" tabindex="0" @click="updateReview(true)">
-                <div class="visible content">Remember</div>
+          <div class="ui basic placeholder segment">
+            <div class="inline">
+              <div class="ui animated fluid blue button" tabindex="0" @click="updateReview(true)">
+                <div class="visible content">Show me next</div>
               </div>
             </div>
           </div>

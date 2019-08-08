@@ -3,8 +3,6 @@ parasails.registerPage('card-review', {
   //  ║║║║║ ║ ║╠═╣║    ╚═╗ ║ ╠═╣ ║ ║╣
   //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
   data: {
-    //…
-    showAnswer: false,
     learning: null,
     noMore: false
   },
@@ -34,7 +32,7 @@ parasails.registerPage('card-review', {
     updateReview: async function (input) {
       $('.dimmer').addClass('active');
       var _this = this;
-      await Cloud['reviewCard'].with({ id: this.card.id, remember: input });
+      await Cloud['reviewCard'].with({ id: this.card.id });
       console.log('review captured')
       await _this.next()
     }

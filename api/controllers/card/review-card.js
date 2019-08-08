@@ -31,8 +31,7 @@ module.exports = {
             await InteractionLog.create({
                 type: 'card:reviewed',
                 log: {
-                    id: inputs.id,
-                    remember: inputs.remember
+                    id: inputs.id
                 },
                 user: this.req.user.id
             });
@@ -45,6 +44,5 @@ module.exports = {
         var card = await Card.findOne({ id: query.rows[0].id }).populate('tags')
         return exits.success({ card: card });
     }
-
 
 };
