@@ -32,7 +32,7 @@ module.exports = {
 
     var labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-    var query_remember_true = `
+    var query_cards_reviewed = `
     SELECT
     count(*) AS count,
     to_char(to_timestamp(EXTRACT(MONTH FROM created_at)::TEXT, 'MM'), 'Mon') AS month
@@ -48,23 +48,7 @@ module.exports = {
     GROUP BY
     EXTRACT(MONTH FROM created_at)
   `
-    var query_remember_false = `
-    SELECT
-    count(*) AS count,
-    to_char(to_timestamp(EXTRACT(MONTH FROM created_at)::TEXT, 'MM'), 'Mon') AS month
-    FROM (
-      SELECT
-        to_timestamp(TRUNC(CAST("createdAt" AS bigint) / 1000))::DATE AS created_at,
-        log ->> 'remember' AS remember,
-        EXTRACT(YEAR FROM to_timestamp(TRUNC(CAST("createdAt" AS bigint) / 1000))::DATE) as year
-      FROM
-        interactionlog
-      WHERE
-        log @> '{"remember":false}' AND "user" = $2) il WHERE il.year = $1
-    GROUP BY
-    EXTRACT(MONTH FROM created_at)
-  `
-    var query_card_added = `
+    var query_cards_added = `
     SELECT
     count(*) AS count,
     to_char(to_timestamp(EXTRACT(MONTH FROM created_at)::TEXT, 'MM'), 'Mon') AS month
@@ -77,27 +61,21 @@ module.exports = {
     GROUP BY
     EXTRACT(MONTH FROM created_at)
   `
-    var count_remember_true = await sails.sendNativeQuery(query_remember_true, [year, this.req.user.id]);
-    var count_remember_false = await sails.sendNativeQuery(query_remember_false, [year, this.req.user.id]);
-    var count_card_added = await sails.sendNativeQuery(query_card_added, [year, this.req.user.id]);
+    var count_cards_reviewed = await sails.sendNativeQuery(query_cards_reviewed, [year, this.req.user.id]);
+    var count_cards_added = await sails.sendNativeQuery(query_cards_added, [year, this.req.user.id]);
     var data = {
-      remember_true: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      remember_false: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      card_added: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      cards_reviewed: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      cards_added: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     };
 
     _.forEach(labels, function (l, index) {
-      _.forEach(count_remember_true.rows, function (rt) {
+      _.forEach(count_cards_reviewed.rows, function (rt) {
         if (l == rt.month)
-          data.remember_true[index] = parseInt(rt.count);
+          data.cards_reviewed[index] = parseInt(rt.count);
       });
-      _.forEach(count_remember_false.rows, function (rt) {
+      _.forEach(count_cards_added.rows, function (rt) {
         if (l == rt.month)
-          data.remember_false[index] = parseInt(rt.count);
-      });
-      _.forEach(count_card_added.rows, function (rt) {
-        if (l == rt.month)
-          data.card_added[index] = parseInt(rt.count);
+          data.cards_added[index] = parseInt(rt.count);
       });
     });
 
@@ -105,23 +83,17 @@ module.exports = {
       //…
       filter: year,
       chart_config: {
-        type: 'line',
+        type: 'bar',
         data: {
           labels: labels,
           datasets: [{
-            data: data.remember_true,
-            label: 'Remember',
+            data: data.cards_reviewed,
+            label: 'Cards Reviewed',
             backgroundColor: "rgba(153, 102, 255, 0.7)",
             borderColor: "rgb(153, 102, 255)",
             fill: true
           }, {
-            data: data.remember_false,
-            label: 'Not Remember',
-            backgroundColor: "rgba(75, 192, 192, 0.7)",
-            borderColor: "rgb(75, 192, 192)",
-            fill: true
-          }, {
-            data: data.card_added,
+            data: data.cards_added,
             label: 'Cards Added',
             backgroundColor: "rgba(255, 159, 64, 0.7)",
             borderColor: "rgb(255, 159, 64)",
