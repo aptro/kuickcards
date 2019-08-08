@@ -13,14 +13,13 @@
             <div class="content">
               <div class="ui header">
                 <div class="ui transparent focus fluid input">
-                  <input type="text" v-model=card.question placeholder="Enter Question" required>
+                  <input type="text" v-model=card.question placeholder="Enter a Title/Question">
                 </div>
               </div>
               <div class="description">
                 <trix v-model="card.answer" v-on:content-changed='onAnswerUpdate'></trix>
               </div>
             </div>
-
             <div class="extra content">
               <select class="ui fluid selection dropdown tags" v-model="card.tags" multiple="" name="tags">
                 <option value="">Tags</option>

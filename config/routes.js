@@ -29,6 +29,10 @@ module.exports.routes = {
   'DELETE /cards/:id': { action: 'card/destroy-card' },
   'POST /cards/review':{action: 'card/review-card'},
   'GET /cards/review':{action: 'card/review-card'},
+  'POST /cards/review':{action: 'card/review-card'},
+  
+  'POST /documents/':{action: 'document/create-document'},
+  'GET /documents/:id/download':{action: 'document/download-document'},
   
 
   'POST /tags': { action: 'tag/create-tag' },
