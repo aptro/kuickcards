@@ -6,9 +6,9 @@
   "keywords": [],
   "dependencies": {
     "@sailshq/connect-redis": "^3.2.1",
-    "@sailshq/lodash": "^3.10.3",
+    "@sailshq/lodash": "^3.10.4",
     "@sailshq/socket.io-redis": "^5.2.0",
-    "algoliasearch": "^3.32.1",
+    "algoliasearch": "^3.35.0",
     "async": "2.0.1",
     "lusca": "^1.6.1",
     "moment": "^2.24.0",
@@ -16,9 +16,9 @@
     "passport-twitter": "^1.0.4",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
-    "sails": "^1.1.0",
+    "sails": "^1.2.3",
     "sails-hook-apianalytics": "^2.0.0",
-    "sails-hook-organics": "^0.16.0",
+    "sails-hook-organics": "^0.16.1",
     "sails-hook-orm": "^2.1.1",
     "sails-hook-sockets": "^1.5.5",
     "sails-hook-uploads": "^0.4.3",
@@ -29,8 +29,8 @@
     "@sailshq/eslint": "^4.19.3",
     "@sailshq/htmlhint": "^0.9.16",
     "@sailshq/lesshint": "^4.6.6",
-    "grunt": "^1.0.3",
-    "sails-hook-grunt": "^3.0.2"
+    "grunt": "^1.0.4",
+    "sails-hook-grunt": "^3.1.1"
   },
   "scripts": {
     "start": "NODE_ENV=production node app.js",
